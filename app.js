@@ -30,6 +30,7 @@ app.get('/weather', function(req, res) {
           error: error
         })
       }
+      let ciudad = req.query.search
       let longitud = response.features[0].center[0]
       let latitud = response.features[0].center[1]
 
@@ -52,7 +53,12 @@ app.get('/weather', function(req, res) {
             let resultado = info.summary + ' durante el dia. Actualmente esta a ' + info.temperature +
             ' C. Hay una ' + info.precipProbability + ' % de posibilidad de precipitacion de tipo ' + info.precipType +
             '\n Hay una humedad de ' + info.humidity
-            return res.send(resultado)
+            return res.send({
+              ciudad: ciudad,
+              grados: info.temperature,
+              probabilidad_de_lluvia: info.precipProbability,
+              resultado: resultado
+            })
 
           }
       })
